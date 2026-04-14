@@ -1,53 +1,56 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { TimeLineContext } from '../context/TimeLineContext';
-import callImg from '../assets/call.png'
-import textImg from '../assets/text.png'
-import videoImg from '../assets/video.png'
+import TimeLineCard from './TimeLineCard';
 
 const TimeLinePage = () => {
     const { timeLine } = useContext(TimeLineContext);
-    // console.log(timeLine, setTimeLine);
 
-    const getIcon = (type) => {
-        if (type === "Call") return callImg;
-        if (type === "Text") return textImg;
-        if (type === "Video") return videoImg;
-    };
+    const [filter, setFilter] = useState('All');
+
+    const filteredData =
+        filter === "All"
+            ? timeLine
+            : timeLine.filter((item) => item.type === filter);
+
     return (
         <div className='container mx-auto mt-10'>
-            <div className="mb-8 text-center">
-                <h2 className="font-semibold text-4xl text-[#1F2937] text-left">Timeline</h2>
+
+            {/* Title */}
+            <div className="mb-8">
+                <h2 className="font-semibold text-4xl text-[#244D3F]">
+                    Timeline
+                </h2>
             </div>
-            {timeLine.length === 0 ?
-                <div className='bg-gray-100 h-[70vh] rounded-2xl flex items-center justify-center'>
-                    <h2 className="font-bold text-4xl text-center my-5 text-[#1F2937]">
-                        Your Timeline is Empty!
+
+            {/* Filter Buttons */}
+            <div className="flex gap-3 mb-6">
+                {["All", "Call", "Text", "Video"].map((item) => (
+                    <button
+                        key={item}
+                        onClick={() => setFilter(item)}
+                        className={`px-4 py-1 rounded-full border ${filter === item
+                                ? "bg-[#244D3F] text-white"
+                                : "bg-white"
+                            }`}
+                    >
+                        {item}
+                    </button>
+                ))}
+            </div>
+
+            {/* Empty State */}
+            {filteredData.length === 0 ? (
+                <div className='bg-gray-100 h-[60vh] rounded-2xl flex items-center justify-center'>
+                    <h2 className="font-bold text-3xl text-[#244D3F]">
+                        No Data Found!
                     </h2>
                 </div>
-                : timeLine.map((friend) => (
-                    <div key={friend.id} className="flex items-center gap-5 border border-gray-200 mt-5 p-5 rounded-2xl">
-
-                        {/* Icon */}
-                        <img src={getIcon(friend.type)} className="w-5" />
-
-                        {/* Text */}
-                        <div>
-                            <p className='mb-1'>
-                                <span className="text-[#244D3F] text-xl font-semibold">
-                                    {friend.type}
-                                </span>
-
-                                <span className="text-gray-600 ml-1">
-                                    with {friend.title}
-                                </span>
-                            </p>
-                            <p className="text-sm text-gray-500">{friend.date}</p>
-                        </div>
-
-                    </div>
+            ) : (
+                filteredData.map((friend) => (
+                    <TimeLineCard key={friend.id} friend={friend} />
                 ))
+            )}
 
-            }
         </div>
     );
 };
