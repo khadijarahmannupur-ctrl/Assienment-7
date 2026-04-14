@@ -12,8 +12,8 @@ const FriendsDetails = () => {
     const { friends, loading } = useFriends();
     const expectedFriend = friends.find((friend) => String(friend.id) === id);
 
-    const contextData = useContext(TimeLineContext);
-    console.log(contextData);
+    const {timeLine, setTimeLine} = useContext(TimeLineContext);
+    console.log(timeLine, setTimeLine);
 
     if (loading) {
         return (
@@ -23,7 +23,7 @@ const FriendsDetails = () => {
         );
     }
     const handleTimeLine = ()=> {
-        contextData
+        setTimeLine([...timeLine, expectedFriend]);
     }
 
     const { name, picture, email, days_since_contact, status, tags, bio, goal, next_due_date } = expectedFriend;
@@ -117,7 +117,7 @@ const FriendsDetails = () => {
                               {/* button-1 */}
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <button
-                                  onClick={()=> handleTimeLine}
+                                  onClick={handleTimeLine}
                                     className="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-center hover:bg-green-50 transition"
                                 >
                                     <div className="text-2xl flex justify-center">
