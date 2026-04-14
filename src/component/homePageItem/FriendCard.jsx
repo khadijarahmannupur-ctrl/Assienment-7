@@ -12,7 +12,7 @@ const FriendCard = ({ friend }) => {
                 ? "bg-[#EFAD44] text-white"
                 : "bg-[#244D3F] text-white";
     return (
-        <Link to={`/${friend.id}`} className="bg-white rounded-xl shadow-sm p-5 text-center mt-10">
+        <Link to={`/friends/${friend.id}`} className="bg-white rounded-xl shadow-sm p-5 text-center mt-10">
 
             {/* Image */}
             <img

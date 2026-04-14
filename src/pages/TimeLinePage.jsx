@@ -5,8 +5,8 @@ import textImg from '../assets/text.png'
 import videoImg from '../assets/video.png'
 
 const TimeLinePage = () => {
-    const { timeLine, setTimeLine } = useContext(TimeLineContext);
-    console.log(timeLine, setTimeLine);
+    const { timeLine } = useContext(TimeLineContext);
+    // console.log(timeLine, setTimeLine);
 
     const getIcon = (type) => {
         if (type === "Call") return callImg;

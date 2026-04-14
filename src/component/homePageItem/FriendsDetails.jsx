@@ -6,6 +6,7 @@ import callImg from '../../assets/call.png'
 import textImg from '../../assets/text.png'
 import videoImg from '../../assets/video.png'
 import { TimeLineContext } from '../../context/TimeLineContext';
+import { toast } from 'react-toastify';
 
 const FriendsDetails = () => {
     const { id } = useParams();
@@ -13,7 +14,7 @@ const FriendsDetails = () => {
     const expectedFriend = friends.find((friend) => String(friend.id) === id);
 
     const { timeLine, setTimeLine } = useContext(TimeLineContext);
-    console.log(timeLine, setTimeLine);
+    // console.log(timeLine, setTimeLine);
 
     if (loading) {
         return (
@@ -31,6 +32,7 @@ const FriendsDetails = () => {
         };
 
         setTimeLine([...timeLine, newEntry]);
+        toast.success(`${name} get the ${type} successfully`)
     }
 
     const { name, picture, email, days_since_contact, status, tags, bio, goal, next_due_date } = expectedFriend;
