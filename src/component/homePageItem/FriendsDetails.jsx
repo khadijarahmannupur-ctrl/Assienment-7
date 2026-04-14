@@ -12,7 +12,7 @@ const FriendsDetails = () => {
     const { friends, loading } = useFriends();
     const expectedFriend = friends.find((friend) => String(friend.id) === id);
 
-    const {timeLine, setTimeLine} = useContext(TimeLineContext);
+    const { timeLine, setTimeLine } = useContext(TimeLineContext);
     console.log(timeLine, setTimeLine);
 
     if (loading) {
@@ -22,8 +22,15 @@ const FriendsDetails = () => {
             </div>
         );
     }
-    const handleTimeLine = ()=> {
-        setTimeLine([...timeLine, expectedFriend]);
+    const handleTimeLine = (type) => {
+        const newEntry = {
+            type: type,
+            title: name,
+            // title: `${type} with ${name}`,
+            date: next_due_date 
+        };
+
+        setTimeLine([...timeLine, newEntry]);
     }
 
     const { name, picture, email, days_since_contact, status, tags, bio, goal, next_due_date } = expectedFriend;
@@ -113,35 +120,37 @@ const FriendsDetails = () => {
                         {/* Quick Check-In */}
                         <div className="rounded-2xl border border-gray-200 p-5">
                             <h3 className="mb-4 text-lg font-semibold text-[#244D3F]">Quick Check-In</h3>
-                            
-                              {/* button-1 */}
+
+                            {/* button-1 */}
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <button
-                                  onClick={handleTimeLine}
+                                    onClick={() => handleTimeLine('Call')}
                                     className="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-center hover:bg-green-50 transition"
                                 >
                                     <div className="text-2xl flex justify-center">
-                                        <img src={callImg} alt="" className='w-8'/>
+                                        <img src={callImg} alt="" className='w-8' />
                                     </div>
                                     <div className="mt-2 text-sm font-medium text-gray-700">Call</div>
                                 </button>
 
                                 {/* button-2 */}
                                 <button
+                                    onClick={() => handleTimeLine('Text')}
                                     className="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-center hover:bg-green-50 transition"
                                 >
                                     <div className="text-2xl flex justify-center">
-                                        <img src={textImg} alt="" className='w-8'/>
+                                        <img src={textImg} alt="" className='w-8' />
                                     </div>
                                     <div className="mt-2 text-sm font-medium text-gray-700">Text</div>
                                 </button>
 
                                 {/* button-3 */}
                                 <button
+                                    onClick={() => handleTimeLine('Video')}
                                     className="rounded-2xl border border-gray-200 bg-gray-50 p-6 text-center hover:bg-green-50 transition"
                                 >
                                     <div className="text-2xl flex justify-center">
-                                        <img src={videoImg} alt="" className='w-8'/>
+                                        <img src={videoImg} alt="" className='w-8' />
                                     </div>
                                     <div className="mt-2 text-sm font-medium text-gray-700">Video</div>
                                 </button>
