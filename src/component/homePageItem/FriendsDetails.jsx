@@ -25,10 +25,10 @@ const FriendsDetails = () => {
     }
     const handleTimeLine = (type) => {
         const newEntry = {
+            id: Date.now(),
             type: type,
             title: name,
-            // title: `${type} with ${name}`,
-            date: next_due_date 
+            date: new Date().toISOString()
         };
 
         setTimeLine([...timeLine, newEntry]);
